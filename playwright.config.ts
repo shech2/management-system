@@ -76,5 +76,11 @@ export default defineConfig({
     command: 'npm run build',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
+    env: {
+      // Set the PORT for the server to start on
+      PORT: '3000',
+      // Set the NODE_ENV for the server
+      NODE_ENV: 'development',
+    },
   },
 });
