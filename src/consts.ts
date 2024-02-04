@@ -17,7 +17,7 @@ export enum Endpoints {
 }
 
 export const User = {
-  email: 'test@test.com',
+  email: 'may74@gmail.com',
   password: '123123',
   name: 'test',
   teamName: 'test',
