@@ -21,6 +21,7 @@ test.describe('Authentication tests', () => {
   test.beforeAll(async ({ browser }) => {
     context = await browser.newContext();
     page = await context.newPage();
+    await page.goto('http://127.0.0.1' + Routes.AUTH);
     page.on('console', (msg) => console.log('console log:', msg.text()));
     page.on('pageerror', (err: Error) => console.trace('PAGEERROR', err));
   });
