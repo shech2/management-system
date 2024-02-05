@@ -72,6 +72,10 @@ test.describe('Authentication tests', () => {
     await page.getByPlaceholder('Password').fill(User.password);
     await page.getByRole('button', { name: 'Log in' }).click();
     pauseExecution(5000);
+    page.on('dialog', async (dialog) => {
+      console.log(dialog.message());
+      await dialog.dismiss();
+    });
     await page.waitForURL(Routes.DASHBOARD);
     expect(page.url()).toBe(baseURL + Routes.DASHBOARD);
     expect(
