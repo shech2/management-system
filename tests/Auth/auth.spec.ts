@@ -20,7 +20,7 @@ test('check db', async () => {
   expect(users).toBeTruthy();
 });
 
-test('create static user in db', async () => {
+test('create static user in db', async ({ page }) => {
   const passwordHash = bcrypt.hashSync(User.password, 10);
   const user = await prisma.user.create({
     data: {
@@ -56,9 +56,6 @@ test('create static user in db', async () => {
   prisma.user.findMany().then((users) => {
     console.log(users);
   });
-});
-
-test('login test without signup', async ({ page }) => {
   // Expect a title "to contain" a substring.
   await page.getByPlaceholder('Email').fill(User.email);
   await page.getByPlaceholder('Password').fill(User.password);
