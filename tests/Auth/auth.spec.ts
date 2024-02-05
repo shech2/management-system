@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 import prisma from '../../lib/prismadb';
 import bcrypt from 'bcrypt';
 import { Provider } from '@prisma/client';
+import { pauseExecution } from '@/utils/axios';
 
 test.beforeEach(async ({ page }) => {
   await page.goto(baseURL);
@@ -57,6 +58,7 @@ test('login test without signup', async ({ page }) => {
   await page.getByPlaceholder('Email').fill(User.email);
   await page.getByPlaceholder('Password').fill(User.password);
   await page.getByRole('button', { name: 'Log in' }).click();
+  pauseExecution(5000);
   await page.waitForURL(Routes.DASHBOARD);
   expect(page.url()).toBe(baseURL + Routes.DASHBOARD);
   expect(await page.getByRole('button', { name: 'Logout' }).textContent()).toBe(
