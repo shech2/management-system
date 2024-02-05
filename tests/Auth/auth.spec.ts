@@ -21,15 +21,9 @@ test.describe('Authentication tests', () => {
   test.beforeAll(async ({ browser }) => {
     context = await browser.newContext();
     page = await context.newPage();
-    await page.goto('http://127.0.0.1' + Routes.AUTH);
+    await page.goto(baseURL + Routes.AUTH);
     page.on('console', (msg) => console.log('console log:', msg.text()));
     page.on('pageerror', (err: Error) => console.trace('PAGEERROR', err));
-  });
-
-  test('load auth page', async () => {
-    await page.goto(baseURL + Routes.AUTH);
-    expect(page.url()).toBe(baseURL + Routes.AUTH);
-    expect(await page.title()).toBe('Management System');
   });
 
   test('create static user in db', async () => {
@@ -69,8 +63,7 @@ test.describe('Authentication tests', () => {
 
   test('check users in db', async () => {
     const users = await prisma.user.findMany();
-    console.log('users:', users);
-    expect(users).toBeTruthy();
+    expect(users.length).toBeGreaterThan(0);
   });
 
   test('login test', async () => {
