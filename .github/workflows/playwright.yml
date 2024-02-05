@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers and Start dev Server
-        run: npm run build && npm run dev && npx playwright install --with-deps chromium
+        run: npm run build && npx playwright install --with-deps chromium
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
