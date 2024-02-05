@@ -76,7 +76,7 @@ test.describe('Authentication tests', () => {
       console.log(dialog.message());
       await dialog.dismiss();
     });
-    await page.waitForURL(Routes.DASHBOARD);
+    // await page.waitForURL(Routes.DASHBOARD);
     expect(page.url()).toBe(baseURL + Routes.DASHBOARD);
     expect(
       await page.getByRole('button', { name: 'Logout' }).textContent(),
