@@ -31,6 +31,8 @@ jobs:
           POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
           VERCEL_EMAIL_API_KEY: ${{ secrets.VERCEL_EMAIL_API_KEY }}
           VERCEL_EMAIL_SENDER: ${{ secrets.VERCEL_EMAIL_SENDER }}
+      - name: Pull vecel env
+        run: npx vercel env pull .env.local
       - name: Run Playwright tests
         run: npx playwright test
         env:
