@@ -51,6 +51,11 @@ test('create static user in db', async () => {
       },
     },
   });
+  expect(user).toBeTruthy();
+  expect(team).toBeTruthy();
+  prisma.user.findMany().then((users) => {
+    console.log(users);
+  });
 });
 
 test('login test without signup', async ({ page }) => {
