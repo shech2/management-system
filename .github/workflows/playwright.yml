@@ -31,6 +31,8 @@ jobs:
           POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
           VERCEL_EMAIL_API_KEY: ${{ secrets.VERCEL_EMAIL_API_KEY }}
           VERCEL_EMAIL_SENDER: ${{ secrets.VERCEL_EMAIL_SENDER }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_JWT_SECRET: ${{ secrets.NEXT_PUBLIC_JWT_SECRET }}
       - name: Run Playwright tests
         run: npx playwright test
         env:
@@ -39,6 +41,11 @@ jobs:
           # The default PostgreSQL port
           POSTGRES_PORT: 5432
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
+          VERCEL_EMAIL_API_KEY: ${{ secrets.VERCEL_EMAIL_API_KEY }}
+          VERCEL_EMAIL_SENDER: ${{ secrets.VERCEL_EMAIL_SENDER }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_JWT_SECRET: ${{ secrets.NEXT_PUBLIC_JWT_SECRET }}
 
       - uses: actions/upload-artifact@v3
         if: always()
