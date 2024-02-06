@@ -9,24 +9,24 @@ test.describe('Authentication tests', () => {
   let context: BrowserContext;
   let page: Page;
 
-  test.afterAll(async () => {
-    // Clean up the database after all tests are done
-    await prisma.invite.deleteMany({
-      where: {
-        email: User.email,
-      },
-    });
-    await prisma.team.deleteMany({
-      where: {
-        name: User.teamName,
-      },
-    });
-    await prisma.user.deleteMany({
-      where: {
-        email: User.email,
-      },
-    });
-  });
+  // test.afterAll(async () => {
+  //   // Clean up the database after all tests are done
+  //   await prisma.invite.deleteMany({
+  //     where: {
+  //       email: User.email,
+  //     },
+  //   });
+  //   await prisma.team.deleteMany({
+  //     where: {
+  //       name: User.teamName,
+  //     },
+  //   });
+  //   await prisma.user.deleteMany({
+  //     where: {
+  //       email: User.email,
+  //     },
+  //   });
+  // });
 
   test.beforeAll(async ({ browser }) => {
     context = await browser.newContext();
@@ -94,7 +94,9 @@ test.describe('Authentication tests', () => {
     await page.getByPlaceholder('Password').fill(User.password);
     await page.getByRole('button', { name: 'Log in' }).click();
     pauseExecution(2000);
+    console.log('URL:', page.url());
     page.waitForURL(Routes.DASHBOARD);
+    console.log('URL:', page.url());
     expect(
       await page.getByRole('button', { name: 'Logout' }).textContent(),
     ).toBe('Logout');
