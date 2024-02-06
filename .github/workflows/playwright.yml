@@ -5,7 +5,14 @@ on:
   pull_request:
     branches: [main, master]
 jobs:
-  test:
+  playwright-tests:
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
+      VERCEL_EMAIL_API_KEY: ${{ secrets.VERCEL_EMAIL_API_KEY }}
+      VERCEL_EMAIL_SENDER: ${{ secrets.VERCEL_EMAIL_SENDER }}
+      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+      NEXT_PUBLIC_JWT_SECRET: ${{ secrets.NEXT_PUBLIC_JWT_SECRET }}
     services:
       postgres:
         image: postgres:13
@@ -18,28 +25,16 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 14
       - name: Install dependencies
         run: npm ci
-      - name: Install Playwright Browsers
-        run: npm run build && npx playwright install --with-deps
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
-          VERCEL_EMAIL_API_KEY: ${{ secrets.VERCEL_EMAIL_API_KEY }}
-          VERCEL_EMAIL_SENDER: ${{ secrets.VERCEL_EMAIL_SENDER }}
+      - name: Install Playwright Browsers and Start dev Server
+        run: npm run build && npx playwright install --with-deps chromium
       - name: Run Playwright tests
-        run: npx playwright test --workers=1 --reporter=list
-        env:
-          # The hostname used to communicate with the PostgreSQL service container
-          POSTGRES_HOST: postgres
-          # The default PostgreSQL port
-          POSTGRES_PORT: 5432
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
+        run: npx playwright test
       - uses: actions/upload-artifact@v3
         if: always()
         with:
