@@ -10,7 +10,17 @@ test.describe('Authentication tests', () => {
   let page: Page;
 
   test.afterAll(async () => {
-    // delete test user
+    // Clean up the database after all tests are done
+    await prisma.invite.deleteMany({
+      where: {
+        email: User.email,
+      },
+    });
+    await prisma.team.deleteMany({
+      where: {
+        name: User.teamName,
+      },
+    });
     await prisma.user.deleteMany({
       where: {
         email: User.email,
@@ -24,6 +34,10 @@ test.describe('Authentication tests', () => {
     await page.goto(baseURL + Routes.AUTH);
     page.on('console', (msg) => console.log('console log:', msg.text()));
     page.on('pageerror', (err: Error) => console.trace('PAGEERROR', err));
+    page.on('dialog', async (dialog) => {
+      console.log(dialog.message());
+      await dialog.dismiss();
+    });
   });
 
   test('create static user in db', async () => {
@@ -57,8 +71,16 @@ test.describe('Authentication tests', () => {
         },
       },
     });
+    const invite = await prisma.invite.create({
+      data: {
+        email: User.email,
+        teamId: team.id,
+        role: User.Role,
+      },
+    });
     expect(user).toBeTruthy();
     expect(team).toBeTruthy();
+    expect(invite).toBeTruthy();
   });
 
   test('check users in db', async () => {
@@ -71,13 +93,8 @@ test.describe('Authentication tests', () => {
     await page.getByPlaceholder('Email').fill(User.email);
     await page.getByPlaceholder('Password').fill(User.password);
     await page.getByRole('button', { name: 'Log in' }).click();
-    pauseExecution(5000);
-    page.on('dialog', async (dialog) => {
-      console.log(dialog.message());
-      await dialog.dismiss();
-    });
-    // await page.waitForURL(Routes.DASHBOARD);
-    expect(page.url()).toBe(baseURL + Routes.DASHBOARD);
+    pauseExecution(2000);
+    page.waitForURL(Routes.DASHBOARD);
     expect(
       await page.getByRole('button', { name: 'Logout' }).textContent(),
     ).toBe('Logout');
