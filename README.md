@@ -1,5 +1,4 @@
 <div align="center">
-<img alt="vercel" src="https://vercelbadge.vercel.app/api/shech2/management-system?style=for-the-badge">
 <img alt="GitHub deployments" src="https://img.shields.io/github/deployments/shech2/management-system/Production?style=for-the-badge&label=Production">
 <img alt="GitHub deployments" src="https://img.shields.io/github/deployments/shech2/management-system/Preview?style=for-the-badge&label=Preview">
 <img alt="GitHub issues" src="https://img.shields.io/github/issues/shech2/management-system?style=for-the-badge">
