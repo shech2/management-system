@@ -9,9 +9,9 @@
     "format": "npx prettier --write .",
     "lint": "next lint",
     "docker:local:up": "docker-compose --profile local up -d",
-    "prisma:generate": "dotenv -e .env.local -- npx prisma generate",
-    "prisma:validate": "dotenv -e .env.local -- npx prisma validate",
-    "migrate:postgres": "dotenv -e .env.local -- prisma migrate dev",
+    "prisma:generate": "prisma generate",
+    "prisma:validate": "prisma validate",
+    "migrate:postgres": "migrate dev",
     "migrate:reset": "prisma migrate reset --force",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
