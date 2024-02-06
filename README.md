@@ -26,6 +26,13 @@ for Stroybook:
 ```bash
 npm run storybook
 ```
+Playwright test:
+
+```bash
+npx playwright test
+// with ui
+npx playwright test --ui
+```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
