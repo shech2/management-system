@@ -94,7 +94,7 @@ test.describe('Authentication tests', () => {
     await page.getByPlaceholder('Password').fill(User.password);
     await page.getByRole('button', { name: 'Log in' }).click();
     pauseExecution(2000);
-    page.waitForURL(Routes.DASHBOARD);
+    await page.waitForURL(Routes.DASHBOARD);
     expect(
       await page.getByRole('button', { name: 'Logout' }).textContent(),
     ).toBe('Logout');
