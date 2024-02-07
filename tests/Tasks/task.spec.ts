@@ -24,6 +24,7 @@ test.describe('Task tests', () => {
     ).toBe('Logout');
     await page.getByRole('button', { name: 'Create Task' }).click();
     await page.getByPlaceholder('Title').fill('Test Task');
+    await page.getByPlaceholder('Assignee').fill(User.email);
     await page.getByPlaceholder('Description').fill('Test Description');
     await page.getByRole('button', { name: 'Create' }).last().click();
     pauseExecution(2000);
@@ -45,6 +46,11 @@ test.describe('Task tests', () => {
     await prisma.user.deleteMany({
       where: {
         email: User.email,
+      },
+    });
+    await prisma.task.deleteMany({
+      where: {
+        title: 'Test Task',
       },
     });
     await context.close();
