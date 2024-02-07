@@ -9,25 +9,6 @@ test.describe('Authentication tests', () => {
   let context: BrowserContext;
   let page: Page;
 
-  test.afterAll(async () => {
-    // Clean up the database after all tests are done
-    await prisma.invite.deleteMany({
-      where: {
-        email: User.email,
-      },
-    });
-    await prisma.team.deleteMany({
-      where: {
-        name: User.teamName,
-      },
-    });
-    await prisma.user.deleteMany({
-      where: {
-        email: User.email,
-      },
-    });
-  });
-
   test.beforeAll(async ({ browser }) => {
     context = await browser.newContext();
     page = await context.newPage();
